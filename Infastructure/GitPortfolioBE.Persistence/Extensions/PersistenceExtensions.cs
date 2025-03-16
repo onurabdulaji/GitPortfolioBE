@@ -1,4 +1,6 @@
-﻿using GitPortfolioBE.Persistence.Context;
+﻿using GitPortfolioBE.Domain.Interfaces.IRepositories;
+using GitPortfolioBE.Persistence.Context;
+using GitPortfolioBE.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,5 +15,10 @@ public static class PersistenceExtensions
         {
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
         });
+
+        services.AddScoped(typeof(IReadRepository<>), typeof(ReadRepository<>));
+        services.AddScoped(typeof(IWriteRepository<>), typeof(WriteRepository<>));
+
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
     }
 }
