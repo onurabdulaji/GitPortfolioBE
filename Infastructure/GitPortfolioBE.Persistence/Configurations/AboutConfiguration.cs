@@ -8,5 +8,6 @@ public class AboutConfiguration : BaseConfiguration<About>
     public override void Configure(EntityTypeBuilder<About> builder)
     {
         base.Configure(builder);
+        builder.HasKey(x => x.EntityId);
     }
 }

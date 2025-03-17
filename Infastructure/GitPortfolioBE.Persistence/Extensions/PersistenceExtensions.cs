@@ -1,4 +1,5 @@
-﻿using GitPortfolioBE.Domain.Interfaces.IRepositories;
+﻿using GitPortfolioBE.Domain.Entities;
+using GitPortfolioBE.Domain.Interfaces.IRepositories;
 using GitPortfolioBE.Domain.Interfaces.IRepositories.IRepo.AboutIRepo;
 using GitPortfolioBE.Domain.Interfaces.IRepositories.IRepo.AppRoleIRepo;
 using GitPortfolioBE.Domain.Interfaces.IRepositories.IRepo.AppUserIRepo;
@@ -29,6 +30,7 @@ using GitPortfolioBE.Persistence.Repositories.Repos.SkillRepo;
 using GitPortfolioBE.Persistence.Repositories.Repos.SocialMediaRepo;
 using GitPortfolioBE.Persistence.Repositories.Repos.StatRepo;
 using GitPortfolioBE.Persistence.Repositories.Repos.SummaryRepo;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -43,6 +45,14 @@ public static class PersistenceExtensions
         {
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
         });
+
+        services.AddIdentity<AppUser, AppRole>(options =>
+        {
+            options.SignIn.RequireConfirmedAccount = true;
+        })
+        .AddEntityFrameworkStores<AppDbContext>()
+        .AddDefaultTokenProviders();
+
 
         services.AddScoped(typeof(IReadRepository<>), typeof(ReadRepository<>));
         services.AddScoped(typeof(IWriteRepository<>), typeof(WriteRepository<>));
@@ -72,9 +82,6 @@ public static class PersistenceExtensions
         services.AddScoped<IHeroReadRepository, HeroReadRepository>();
         services.AddScoped<IHeroWriteRepository, HeroWriteRepository>();
 
-        services.AddScoped<IAboutReadRepository, AboutReadRepository>();
-        services.AddScoped<IAboutWriteRepository, AboutWriteRepository>();
-
         services.AddScoped<IProjectReadRepository, ProjectReadRepository>();
         services.AddScoped<IProjectWriteRepository, ProjectWriteRepository>();
 
@@ -95,5 +102,8 @@ public static class PersistenceExtensions
 
         services.AddScoped<ISummaryReadRepository, SummaryReadRepository>();
         services.AddScoped<ISummaryWriteRepository, SummaryWriteRepository>();
+
+        services.AddScoped<RoleManager<AppRole>>();
+        services.AddScoped<UserManager<AppUser>>();
     }
 }

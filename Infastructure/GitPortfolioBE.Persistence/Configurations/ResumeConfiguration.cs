@@ -8,5 +8,6 @@ public class ResumeConfiguration : BaseConfiguration<Resume>
     public override void Configure(EntityTypeBuilder<Resume> builder)
     {
         base.Configure(builder);
+        builder.HasKey(x => x.EntityId);
     }
 }

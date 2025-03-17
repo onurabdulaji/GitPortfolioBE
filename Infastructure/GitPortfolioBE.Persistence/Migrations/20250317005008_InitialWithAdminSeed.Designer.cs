@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GitPortfolioBE.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250316213923_Initializer")]
-    partial class Initializer
+    [Migration("20250317005008_InitialWithAdminSeed")]
+    partial class InitialWithAdminSeed
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,7 +27,7 @@ namespace GitPortfolioBE.Persistence.Migrations
 
             modelBuilder.Entity("GitPortfolioBE.Domain.Entities.About", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("EntityId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -70,7 +70,7 @@ namespace GitPortfolioBE.Persistence.Migrations
                     b.Property<string>("Website")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("EntityId");
 
                     b.ToTable("Abouts");
                 });
@@ -91,6 +91,9 @@ namespace GitPortfolioBE.Persistence.Migrations
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("EntityId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
@@ -110,11 +113,22 @@ namespace GitPortfolioBE.Persistence.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("a23d4f76-45c8-4a9f-b8c9-2e78d5ebd4f8"),
+                            ConcurrencyStamp = "967884f0-4bd6-4043-817a-1bb76034d1fc",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EntityId = new Guid("a23d4f76-45c8-4a9f-b8c9-2e78d5ebd4f8"),
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        });
                 });
 
             modelBuilder.Entity("GitPortfolioBE.Domain.Entities.AppUser", b =>
                 {
-                    b.Property<Guid>("ID")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -137,6 +151,9 @@ namespace GitPortfolioBE.Persistence.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<Guid>("EntityId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -176,11 +193,14 @@ namespace GitPortfolioBE.Persistence.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
+                    b.Property<string>("UserFullName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -191,11 +211,32 @@ namespace GitPortfolioBE.Persistence.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("d90b3a5e-1c5d-4b29-89e2-6e3d5e1b5a7a"),
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "67182dd5-46dc-4c5f-aec5-79aa69a94d92",
+                            CreatedDate = new DateTime(2025, 3, 17, 0, 50, 8, 23, DateTimeKind.Utc).AddTicks(1583),
+                            Email = "onurabdulaji@gmail.com",
+                            EmailConfirmed = true,
+                            EntityId = new Guid("d90b3a5e-1c5d-4b29-89e2-6e3d5e1b5a7a"),
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ONURABDULAJI@GMAIL.COM",
+                            NormalizedUserName = "ONURABDULAJI",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIlbg82X/ctVCGzYBRQcaYqDX8CdQdwK7h7yMb4QDhI2UHBplHNAoC2ATxlecWYdbA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "f9f9473f-558b-41c5-b19c-f7cb4db8d261",
+                            TwoFactorEnabled = false,
+                            UserFullName = "Onur Abdulaji",
+                            UserName = "OnurAbdulaji"
+                        });
                 });
 
             modelBuilder.Entity("GitPortfolioBE.Domain.Entities.Contact", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("EntityId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -220,14 +261,14 @@ namespace GitPortfolioBE.Persistence.Migrations
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("EntityId");
 
                     b.ToTable("Contacts");
                 });
 
             modelBuilder.Entity("GitPortfolioBE.Domain.Entities.Education", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("EntityId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -255,14 +296,14 @@ namespace GitPortfolioBE.Persistence.Migrations
                     b.Property<int?>("ToYear")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("EntityId");
 
                     b.ToTable("Educations");
                 });
 
             modelBuilder.Entity("GitPortfolioBE.Domain.Entities.Form", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("EntityId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -290,14 +331,14 @@ namespace GitPortfolioBE.Persistence.Migrations
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("Id");
+                    b.HasKey("EntityId");
 
                     b.ToTable("Forms");
                 });
 
             modelBuilder.Entity("GitPortfolioBE.Domain.Entities.Hero", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("EntityId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -319,14 +360,14 @@ namespace GitPortfolioBE.Persistence.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("EntityId");
 
                     b.ToTable("Hero");
                 });
 
             modelBuilder.Entity("GitPortfolioBE.Domain.Entities.Project", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("EntityId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -363,14 +404,14 @@ namespace GitPortfolioBE.Persistence.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("EntityId");
 
                     b.ToTable("Projects");
                 });
 
             modelBuilder.Entity("GitPortfolioBE.Domain.Entities.Resume", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("EntityId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -413,14 +454,14 @@ namespace GitPortfolioBE.Persistence.Migrations
                     b.Property<DateTime?>("YearsFromToDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("Id");
+                    b.HasKey("EntityId");
 
                     b.ToTable("Resumes");
                 });
 
             modelBuilder.Entity("GitPortfolioBE.Domain.Entities.Service", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("EntityId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -442,14 +483,14 @@ namespace GitPortfolioBE.Persistence.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("EntityId");
 
                     b.ToTable("Services");
                 });
 
             modelBuilder.Entity("GitPortfolioBE.Domain.Entities.Skill", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("EntityId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -468,14 +509,14 @@ namespace GitPortfolioBE.Persistence.Migrations
                     b.Property<int?>("Value")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("EntityId");
 
                     b.ToTable("Skills");
                 });
 
             modelBuilder.Entity("GitPortfolioBE.Domain.Entities.SocialMedia", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("EntityId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -497,14 +538,14 @@ namespace GitPortfolioBE.Persistence.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("EntityId");
 
                     b.ToTable("SocialMedias");
                 });
 
             modelBuilder.Entity("GitPortfolioBE.Domain.Entities.Stat", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("EntityId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -529,14 +570,14 @@ namespace GitPortfolioBE.Persistence.Migrations
                     b.Property<int?>("Worker")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("EntityId");
 
                     b.ToTable("Stats");
                 });
 
             modelBuilder.Entity("GitPortfolioBE.Domain.Entities.Summary", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("EntityId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -564,7 +605,7 @@ namespace GitPortfolioBE.Persistence.Migrations
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("EntityId");
 
                     b.ToTable("Summaries");
                 });
@@ -651,6 +692,13 @@ namespace GitPortfolioBE.Persistence.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = new Guid("d90b3a5e-1c5d-4b29-89e2-6e3d5e1b5a7a"),
+                            RoleId = new Guid("a23d4f76-45c8-4a9f-b8c9-2e78d5ebd4f8")
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>

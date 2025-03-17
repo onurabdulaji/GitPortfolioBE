@@ -7,5 +7,6 @@ public class EducationConfiguration : BaseConfiguration<Education>
     public override void Configure(EntityTypeBuilder<Education> builder)
     {
         base.Configure(builder);
+        builder.HasKey(x => x.EntityId);
     }
 }

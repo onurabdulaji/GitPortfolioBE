@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace GitPortfolioBE.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class Initializer : Migration
+    public partial class InitialWithAdminSeed : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,7 +15,7 @@ namespace GitPortfolioBE.Persistence.Migrations
                 name: "Abouts",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EntityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Birthday = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -32,7 +32,7 @@ namespace GitPortfolioBE.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Abouts", x => x.Id);
+                    table.PrimaryKey("PK_Abouts", x => x.EntityId);
                 });
 
             migrationBuilder.CreateTable(
@@ -43,6 +43,7 @@ namespace GitPortfolioBE.Persistence.Migrations
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    EntityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -56,9 +57,11 @@ namespace GitPortfolioBE.Persistence.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RefreshToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RefreshTokenExpiryTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    EntityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -79,14 +82,14 @@ namespace GitPortfolioBE.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.ID);
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Contacts",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EntityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -97,14 +100,14 @@ namespace GitPortfolioBE.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Contacts", x => x.Id);
+                    table.PrimaryKey("PK_Contacts", x => x.EntityId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Educations",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EntityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FromYear = table.Column<int>(type: "int", nullable: true),
                     ToYear = table.Column<int>(type: "int", nullable: true),
@@ -116,14 +119,14 @@ namespace GitPortfolioBE.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Educations", x => x.Id);
+                    table.PrimaryKey("PK_Educations", x => x.EntityId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Forms",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EntityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FormName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FormEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FormSubject = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -135,14 +138,14 @@ namespace GitPortfolioBE.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Forms", x => x.Id);
+                    table.PrimaryKey("PK_Forms", x => x.EntityId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Hero",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EntityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SubTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BackgroundImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -152,14 +155,14 @@ namespace GitPortfolioBE.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Hero", x => x.Id);
+                    table.PrimaryKey("PK_Hero", x => x.EntityId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Projects",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EntityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SmallImage = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -174,14 +177,14 @@ namespace GitPortfolioBE.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Projects", x => x.Id);
+                    table.PrimaryKey("PK_Projects", x => x.EntityId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Resumes",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EntityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     YearsFromDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -198,14 +201,14 @@ namespace GitPortfolioBE.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Resumes", x => x.Id);
+                    table.PrimaryKey("PK_Resumes", x => x.EntityId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Services",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EntityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Icon = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -215,14 +218,14 @@ namespace GitPortfolioBE.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Services", x => x.Id);
+                    table.PrimaryKey("PK_Services", x => x.EntityId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Skills",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EntityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Value = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -231,14 +234,14 @@ namespace GitPortfolioBE.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Skills", x => x.Id);
+                    table.PrimaryKey("PK_Skills", x => x.EntityId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "SocialMedias",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EntityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Icon = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Link = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -248,14 +251,14 @@ namespace GitPortfolioBE.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SocialMedias", x => x.Id);
+                    table.PrimaryKey("PK_SocialMedias", x => x.EntityId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Stats",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EntityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Client = table.Column<int>(type: "int", nullable: true),
                     Project = table.Column<int>(type: "int", nullable: true),
                     Support = table.Column<int>(type: "int", nullable: true),
@@ -266,14 +269,14 @@ namespace GitPortfolioBE.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Stats", x => x.Id);
+                    table.PrimaryKey("PK_Stats", x => x.EntityId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Summaries",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EntityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -285,7 +288,7 @@ namespace GitPortfolioBE.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Summaries", x => x.Id);
+                    table.PrimaryKey("PK_Summaries", x => x.EntityId);
                 });
 
             migrationBuilder.CreateTable(
@@ -326,7 +329,7 @@ namespace GitPortfolioBE.Persistence.Migrations
                         name: "FK_AspNetUserClaims_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "ID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -346,7 +349,7 @@ namespace GitPortfolioBE.Persistence.Migrations
                         name: "FK_AspNetUserLogins_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "ID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -370,7 +373,7 @@ namespace GitPortfolioBE.Persistence.Migrations
                         name: "FK_AspNetUserRoles_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "ID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -390,9 +393,24 @@ namespace GitPortfolioBE.Persistence.Migrations
                         name: "FK_AspNetUserTokens_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "ID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "CreatedDate", "DeletedDate", "EntityId", "ModifiedDate", "Name", "NormalizedName" },
+                values: new object[] { new Guid("a23d4f76-45c8-4a9f-b8c9-2e78d5ebd4f8"), "967884f0-4bd6-4043-817a-1bb76034d1fc", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, new Guid("a23d4f76-45c8-4a9f-b8c9-2e78d5ebd4f8"), null, "Admin", "ADMIN" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CreatedDate", "DeletedDate", "Email", "EmailConfirmed", "EntityId", "LockoutEnabled", "LockoutEnd", "ModifiedDate", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RefreshToken", "RefreshTokenExpiryTime", "SecurityStamp", "TwoFactorEnabled", "UserFullName", "UserName" },
+                values: new object[] { new Guid("d90b3a5e-1c5d-4b29-89e2-6e3d5e1b5a7a"), 0, "67182dd5-46dc-4c5f-aec5-79aa69a94d92", new DateTime(2025, 3, 17, 0, 50, 8, 23, DateTimeKind.Utc).AddTicks(1583), null, "onurabdulaji@gmail.com", true, new Guid("d90b3a5e-1c5d-4b29-89e2-6e3d5e1b5a7a"), false, null, null, "ONURABDULAJI@GMAIL.COM", "ONURABDULAJI", "AQAAAAIAAYagAAAAEIlbg82X/ctVCGzYBRQcaYqDX8CdQdwK7h7yMb4QDhI2UHBplHNAoC2ATxlecWYdbA==", null, false, null, null, "f9f9473f-558b-41c5-b19c-f7cb4db8d261", false, "Onur Abdulaji", "OnurAbdulaji" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { new Guid("a23d4f76-45c8-4a9f-b8c9-2e78d5ebd4f8"), new Guid("d90b3a5e-1c5d-4b29-89e2-6e3d5e1b5a7a") });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
