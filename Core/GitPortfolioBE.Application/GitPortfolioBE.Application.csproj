@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.11.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />
     <PackageReference Include="MediatR" Version="12.4.1" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.35.0" />
   </ItemGroup>
@@ -17,7 +19,7 @@
 
   <ItemGroup>
     <Folder Include="Features\MVerticalSlice\Authentication\Queries\" />
-    <Folder Include="ServicesManagers\Concretes\" />
+    <Folder Include="Features\MVerticalSlice\Authentication\Rules\" />
   </ItemGroup>
 
 </Project>

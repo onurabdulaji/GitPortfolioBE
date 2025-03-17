@@ -1,50 +1,36 @@
-﻿using GitPortfolioBE.Application.Features.MVerticalSlice.Authentication.Rules;
-using GitPortfolioBE.Application.Interfaces.IServices.Tokens;
-using GitPortfolioBE.Domain.Entities;
+﻿using FluentValidation;
+using GitPortfolioBE.Application.ServicesManagers.Abstracts.AuthenticationServices;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using System.IdentityModel.Tokens.Jwt;
 
 namespace GitPortfolioBE.Application.Features.MVerticalSlice.Authentication.Commands.AuthenticationLogin;
 
 public class LoginHandler : IRequestHandler<LoginRequest, LoginResponse>
 {
-    private readonly UserManager<AppUser> _userManager;
-    private readonly ITokenService _tokenService; 
+    private readonly IAuthenticationUserService _authenticationUserService;
     private readonly ILogger<LoginHandler> _logger;
-    private readonly AuthenticationRules _authenticationRules;
+    private readonly IValidator<LoginRequest> _validator;
 
-    public LoginHandler(UserManager<AppUser> userManager, ITokenService tokenService, ILogger<LoginHandler> logger, AuthenticationRules authenticationRules)
+    public LoginHandler(IAuthenticationUserService authenticationUserService, ILogger<LoginHandler> logger, IValidator<LoginRequest> validator)
     {
-        _userManager = userManager;
-        _tokenService = tokenService;
+        _authenticationUserService = authenticationUserService;
         _logger = logger;
-        _authenticationRules = authenticationRules;
+        _validator = validator;
     }
 
     public async Task<LoginResponse> Handle(LoginRequest request, CancellationToken cancellationToken)
     {
-        var user = await _userManager.FindByEmailAsync(request.Email);
-        if (user == null)
+        var validationResult = await _validator.ValidateAsync(request, cancellationToken);
+        if (!validationResult.IsValid)
         {
-            _logger.LogWarning("User not found");
-            throw new UnauthorizedAccessException("Invalid email or password");
+            _logger.LogWarning("Login validation failed for email: {Email}", request.Email);
+            throw new ValidationException(validationResult.Errors);
         }
 
-        var result = await _userManager.CheckPasswordAsync(user, request.Password);
+        // Doğrudan giriş işlemi
+        var loginResponse = await _authenticationUserService.LoginUserAsync(request.Email, request.Password);
 
-        // Use AuthenticationRules to validate email and password
-        await _authenticationRules.ValidateEmailAndPassword(user, result);
-
-        var roles = await _userManager.GetRolesAsync(user);
-        var token = await _tokenService.CreateToken(user, roles.ToList());
-
-        return new LoginResponse
-        {
-            Token = new JwtSecurityTokenHandler().WriteToken(token),
-            RefreshToken = user.RefreshToken,
-            Expiration = token.ValidTo
-        };
+        _logger.LogInformation("User {Email} successfully logged in.", request.Email);
+        return loginResponse;
     }
 }

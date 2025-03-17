@@ -1,4 +1,9 @@
-﻿using GitPortfolioBE.Application.Features.MVerticalSlice.Authentication.Rules;
+﻿using FluentValidation;
+using GitPortfolioBE.Application.Behaviours;
+using GitPortfolioBE.Application.Features.MVerticalSlice.Authentication.Commands.AuthenticationLogin;
+using GitPortfolioBE.Application.ServicesManagers.Abstracts.AuthenticationServices;
+using GitPortfolioBE.Application.ServicesManagers.Concretes.AuthenticationManagers;
+using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -13,7 +18,12 @@ public static class ApplicationExtension
 
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(assembly));
 
-        services.AddTransient<AuthenticationRules>();
+        services.AddTransient<IAuthenticationUserService, AuthenticationUserService>();
+        services.AddTransient<IAuthenticationRoleService, AuthenticationRoleService>();
+
+        services.AddValidatorsFromAssembly(assembly);
+
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
     }
 }
